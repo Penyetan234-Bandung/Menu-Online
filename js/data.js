@@ -92,7 +92,7 @@ export const menuData = [
            {
            name: 'Pkt Lele Goreng',
            category: 'Nasi Kotak',
-           image: 'images/makanan/nila.jpg',
+           image: 'images/makanan/lele.jpg',
            description: 'Nasi dengan Lele goreng super nikmat, 2 sambal, lalapan segar, tahu, terong goreng, dan Jukut Goreng.',
            variants: [
              { id: 'lele-gr-NP', name: 'Nasi Putih', price: 26000 },
@@ -103,7 +103,7 @@ export const menuData = [
          {
            name: 'Pkt Lele Bakar',
            category: 'Nasi Kotak',
-           image: 'images/makanan/nila.jpg',
+           image: 'images/makanan/lele.jpg',
            description: 'Nasi dengan Lele bakar super nikmat, 2 sambal, lalapan segar, tahu, terong goreng, dan Jukut Goreng.',
            variants: [
              { id: 'lele-bk-NP', name: 'Nasi Putih', price: 27000 },
