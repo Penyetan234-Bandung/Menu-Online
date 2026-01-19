@@ -144,7 +144,7 @@
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         // Pastikan path '/sw.js' sudah benar
-        navigator.serviceWorker.register('/sw.js').then(registration => {
+        navigator.serviceWorker.register('sw.js').then(registration => {
           console.log('Service Worker berhasil didaftarkan:', registration);
         }).catch(error => {
           console.log('Pendaftaran Service Worker gagal:', error);
