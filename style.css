@@ -1,0 +1,96 @@
+:root {
+  /* Warna diupdate berdasarkan logo baru */
+  --primary-green: #1a5b47; 
+  --primary-red: #d12c2c;
+  --accent: var(--primary-green); 
+  --muted: #6b7280;
+  --glass: rgba(255, 255, 255, 0.6);
+  --glass-strong: rgba(255, 255, 255, 0.85);
+  --card-shadow: 0 8px 30px rgba(15, 23, 42, 0.12);
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', 'Noto Sans', 'Arial';
+  background: linear-gradient(135deg, #f0f4f2 0%, #ffffff 100%); /* Background lebih netral ke arah hijau pucat */
+  color: #111827;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding-bottom: 4rem;
+}
+
+/* FITUR TETAP: Brand Badge dengan warna logo */
+.brand-badge { background: linear-gradient(90deg, var(--primary-green), #237a5f); color: white; }
+
+/* FITUR TETAP: Menu Card */
+.menu-card { background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.95)); border-radius: 14px; box-shadow: var(--card-shadow); overflow: hidden; transition: transform .28s ease, box-shadow .28s ease; }
+.menu-card:hover { transform: translateY(-8px); box-shadow: 0 18px 45px rgba(15, 23, 42, 0.18); }
+
+.media-wrap { height: 180px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.media-wrap img { width: 100%; height: 100%; object-fit: cover; }
+
+/* FITUR TETAP: Category Pills (Warna Hijau) */
+.category-btn { transition: all .18s ease; }
+.category-btn.active { background: linear-gradient(90deg, var(--primary-green), #237a5f); color: white; box-shadow: 0 6px 18px rgba(26, 91, 71, 0.2); }
+
+#cart-section { position: sticky; top: 1.5rem; }
+.cart-card { background: var(--glass-strong); backdrop-filter: blur(8px); border-radius: 12px; box-shadow: var(--card-shadow); }
+
+/* FITUR TETAP: Modal */
+.modal-backdrop { background: rgba(15, 23, 42, 0.55); transition: opacity 0.2s ease-in-out; }
+.modal-inner { max-width: 420px; transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out; }
+.modal-backdrop.hidden .modal-inner { transform: scale(0.95); opacity: 0; }
+
+.muted { color: var(--muted); }
+.pill { padding: .35rem .6rem; border-radius: 9999px; border: 1px solid rgba(15, 23, 42, 0.06); }
+
+.mobile-checkout { position: fixed; left: 50%; transform: translateX(-50%); bottom: 1.25rem; z-index: 60; width: calc(100% - 2.5rem); max-width: 680px; transition: transform 0.3s ease, opacity 0.3s ease; }
+.mobile-checkout.hidden { transform: translateX(-50%) translateY(20px); opacity: 0; pointer-events: none; }
+
+:focus { outline: 2px solid rgba(26, 91, 71, 0.2); outline-offset: 3px; }
+
+@media(min-width: 768px) { .media-wrap { height: 220px; } }
+
+/* FITUR ANIMASI (TIDAK BERUBAH) */
+.fly-to-cart-clone {
+  position: fixed;
+  z-index: 100;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: left 1.1s cubic-bezier(0.17, 0.84, 0.44, 1), top 1.1s cubic-bezier(0.32, 0, 0.67, 0), transform 1.1s cubic-bezier(0.45, 0, 0.55, 1), opacity 1.1s ease-out;
+}
+
+.shake {
+  animation: cart-shake 0.4s cubic-bezier(.36, .07, .19, .97) both;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+@keyframes cart-shake {
+  10%, 90% { transform: translate3d(-1px, 0, 0); }
+  20%, 80% { transform: translate3d(2px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-3px, 0, 0); }
+  40%, 60% { transform: translate3d(3px, 0, 0); }
+}
+
+.modal-inner label { color: #4b5563; }
+.tab-btn { padding: 0.5rem 1rem; font-size: 0.875rem; font-weight: 600; color: #6b7280; border-bottom: 2px solid transparent; transform: translateY(1px); transition: all 0.2s ease-in-out; }
+
+/* Warna Tab Aktif diubah ke Hijau */
+.tab-btn.active { color: var(--primary-green); border-bottom-color: var(--primary-green); }
+/* Tambahkan atau pastikan bagian ini ada di style.css tanpa menghapus fitur lama */
+#total-price-display {
+  color: var(--primary-red);
+  /* Menggunakan variabel merah dari logo */
+}
+
+/* Mengubah warna border merah pada validasi input yang salah */
+.border-red-400 {
+  border-color: var(--primary-red) !important;
+}
+/* Memberikan warna merah sesuai logo pada teks header */
+.text-red-logo {
+  color: var(--primary-red) !important;
+  opacity: 1; /* Memastikan teks tidak terlihat pudar seperti class muted */
+}
