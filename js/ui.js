@@ -44,7 +44,7 @@ const createMenuCard = (item) => {
         <div>
           <div class="flex items-start justify-between gap-2">
             <h4 class="text-lg font-semibold">${item.name}</h4>
-            <div class="text-amber-600 font-bold text-right flex-shrink-0">${formatRupiah(item.price)}</div>
+            <div class="text-emerald-600 font-bold text-right flex-shrink-0">${formatRupiah(item.price)}</div>
           </div>
         </div>
         <div class="flex items-center gap-3 mt-4">
