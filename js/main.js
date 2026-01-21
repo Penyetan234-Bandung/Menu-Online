@@ -41,42 +41,67 @@ document.addEventListener('DOMContentLoaded', () => {
   };
   
   // EVENT HANDLERS
+// --- BAGIAN HANDLE ORDER YANG DIPERBARUI ---
 function handleSendOrder() {
-  // Validasi input
-  [elements.customerNameInput, elements.customerAddressInput, elements.customerPhoneInput].forEach(i => i.classList.remove('border-red-400'));
-  if (!elements.customerNameInput.value.trim() || !elements.customerAddressInput.value.trim() || !elements.customerPhoneInput.value.trim()) {
-    showInfoModal(elements, 'Data Kurang Lengkap', 'Mohon isi Nama, No. Telepon, dan Alamat Anda terlebih dahulu.');
-    if (!elements.customerNameInput.value.trim()) elements.customerNameInput.classList.add('border-red-400');
-    if (!elements.customerAddressInput.value.trim()) elements.customerAddressInput.classList.add('border-red-400');
-    if (!elements.customerPhoneInput.value.trim()) elements.customerPhoneInput.classList.add('border-red-400');
-    elements.customerNameInput.focus();
+  // 1. Ambil semua field yang wajib diisi
+  const requiredFields = [
+    elements.customerNameInput,
+    elements.customerPhoneInput,
+    elements.customerAddressInput,
+    elements.deliveryDateInput, // Tambahkan ini
+    elements.deliveryTimeInput // Tambahkan ini
+  ];
+  
+  // 2. Reset status error (hapus border merah)
+  requiredFields.forEach(i => i.classList.remove('border-red-400'));
+  
+  // 3. Cek apakah ada field yang kosong
+  const emptyFields = requiredFields.filter(i => !i.value.trim());
+  
+  if (emptyFields.length > 0) {
+    // Tampilkan modal peringatan
+    showInfoModal(
+      elements,
+      'Data Kurang Lengkap',
+      'Mohon lengkapi Nama, No. Telepon, Alamat, serta Tanggal dan Jam pengiriman.'
+    );
+    
+    // Beri border merah pada field yang kosong
+    emptyFields.forEach(i => i.classList.add('border-red-400'));
+    
+    // Fokuskan ke field kosong pertama
+    emptyFields[0].focus();
     return;
   }
   
+  // 4. Jika semua terisi, lanjut proses pembuatan pesan
   const deliveryDate = elements.deliveryDateInput.value;
   const deliveryTime = elements.deliveryTimeInput.value;
-  const customerPhone = elements.customerPhoneInput.value.trim(); // Ambil data telepon
+  const customerPhone = elements.customerPhoneInput.value.trim();
   
   const totals = calculateTotals(shoppingCart);
   let message = `Halo, saya mau pesan atas nama:%0A%0A`;
   message += `*Nama:* ${encodeURIComponent(elements.customerNameInput.value.trim())}%0A`;
-  message += `*No. Telepon:* ${encodeURIComponent(customerPhone)}%0A`; // ✅ Sertakan No. Telepon di pesan
+  message += `*No. Telepon:* ${encodeURIComponent(customerPhone)}%0A`;
   message += `*Alamat:* ${encodeURIComponent(elements.customerAddressInput.value.trim())}%0A`;
   
-  if (deliveryDate && deliveryTime) {
-    const [year, month, day] = deliveryDate.split('-');
-    const formattedDate = `${day}-${month}-${year}`;
-    message += `*Waktu Pengiriman:* ${encodeURIComponent(formattedDate)} jam ${encodeURIComponent(deliveryTime)}%0A`;
-  }
+  // Format Tanggal (dari YYYY-MM-DD ke DD-MM-YYYY)
+  const [year, month, day] = deliveryDate.split('-');
+  const formattedDate = `${day}-${month}-${year}`;
+  message += `*Waktu Pengiriman:* ${encodeURIComponent(formattedDate)} jam ${encodeURIComponent(deliveryTime)}%0A`;
   
   message += `%0A*Pesanan:*%0A`;
   shoppingCart.forEach(it => {
     message += `• ${encodeURIComponent(it.name)} (x${it.quantity}) - ${encodeURIComponent(formatRupiah(it.price * it.quantity))}%0A`;
   });
-  if (elements.notes.value.trim()) message += `%0A*Catatan:* ${encodeURIComponent(elements.notes.value.trim())}%0A`;
+  
+  if (elements.notes.value.trim()) {
+    message += `%0A*Catatan:* ${encodeURIComponent(elements.notes.value.trim())}%0A`;
+  }
   
   message += `%0A*TOTAL BAYAR:* ${encodeURIComponent(formatRupiah(totals.total))}%0A%0AMohon konfirmasi. Terima kasih.`;
   
+  // 5. Kirim ke WhatsApp
   window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, '_blank');
 }
   
